@@ -15,24 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from core import views
+from core.views import InstrumentCreateView, InstrumentListView, MyInstrumentListView, InstrumentDetailView, InstrumentUpdateView
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from . import settings
 from django.views.generic import RedirectView
+from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import reverse_lazy
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', views.login_user),
-    path('login/submit', views.submit_login),
-    path('instrument/user/', views.list_user_instrument),
-    path('instrument/all/', views.list_all_instrument),
-    path('instrument/detail/<slug:id>/', views.instrument_detail),
-    path('instrument/register/', views.register_instrument),
-    path('instrument/register/submit', views.set_instrument),
-    path('instrument/delete/<slug:id>/', views.delete_instrument),
-    path('logout/', views.logout_user),
-    path('', RedirectView.as_view(url='instrument/all/'))
+    path('login/', LoginView.as_view(template_name='login.html'), name="login"),
+    path('instrument/user/', MyInstrumentListView.as_view(), name='myinstruments'),
+    path('instrument/list/', InstrumentListView.as_view(), name="instrument-list"),
+    path('instrument/detail/<int:pk>/', InstrumentDetailView.as_view(), name='instrument-detail'),
+    path('instrument/register/', InstrumentCreateView.as_view(), name='instrument-register'),
+    path('instrument/edit/<int:pk>/', InstrumentUpdateView.as_view(), name='instrument-edit'),
+    path('logout/', LogoutView.as_view(next_page=reverse_lazy('login'))),
+    path('', RedirectView.as_view(url='instrument/list/'))
 ]
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

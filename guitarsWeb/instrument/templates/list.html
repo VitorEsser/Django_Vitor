@@ -15,16 +15,23 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container" style="margin-bottom: 10%">
             <div class="row">
-                {% for i in instrument %}
+                {% for i in instruments %}
                     <div class="col-sm-4">
                         <a href="../detail/{{ i.id }}">
                             <div class="polaroid">
-                                <img src="{{ i.photo.url }}" alt="NotFound" style="width:100%">
+                                {% if i.photo %}
+                                <img src="{{ i.photo.url }}" style="width:100%">
+                                {% endif %}
                                 <div class="container">
                                     <p>Nome: {{ i.name }}</p>
-                                    <p>Marca: {{ i.brand }}</p>
+                                    <div style="display: inline-flex">
+                                        <p >Marca:</p>
+                                        {% for brand in i.brands.all %}
+                                        <p>&nbsp{{ brand }}; </p>
+                                        {% endfor %}
+                                    </div>
                                     <p>Cordas: {{ i.strings }}</p>
                                 </div>
                             </div>
@@ -35,5 +42,4 @@
             </div>
         </div>  
     </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 {% endblock %}

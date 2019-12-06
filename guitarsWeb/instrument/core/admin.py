@@ -1,12 +1,13 @@
 from django.contrib import admin
-from .models import Instrument
+from .models import Instrument, Brand
 
-# Register your models here.
-
-#admin.site.register(InstrumentLost)
-@admin.register(Instrument)
 class InstrumentAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'brand', 'strings', 'user', 'active',]
+    list_display = ['id', 'name', 'get_brands', 'strings', 'user', 'active',]
     search_fields = ['id', 'user__username']
 
+class BrandAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    search_fields = ['name']
 
+admin.site.register(Brand, BrandAdmin)
+admin.site.register(Instrument, InstrumentAdmin)

@@ -5,31 +5,26 @@
     <br>
     <div class="container" style="margin-bottom: 10%">
       <div class="row">
-        {% for i in instruments %}
-          {% if i.photo %}
+          {% if instruments.photo %}
           <div class="col-sm-4">
               <div style="border-color: black; border-style: solid; width: 356px; height: 300px;">
-                  <img src="{{ i.photo.url }}" alt="NotFound" width="350" height="263" style="margin-top: 16px;"> 
+                  <img src="{{ instruments.photo.url }}" alt="NotFound" width="350" height="263" style="margin-top: 16px;"> 
               </div>
               <br>
           </div>
           {% endif %}
           <div class="col-sm-8">
-              <h2>{{ i.name }}</h2>
+              <h2>{{ instruments.name }}</h2>
               <h5>Informações:</h5>                     
               <div style="display: inline-flex">
                 <p><b>Marca:</b></p> 
-                  {% for brand in i.brands.all %}
+                  {% for brand in instruments.brands.all %}
                     <p>&nbsp{{ brand }}</p>
                   {% endfor %}
                 </div>
-                <p><b>Cordas: </b>{{ i.strings }}</p>
-              <a href="{% url 'instrument-edit' i.id %}">
-                  <button type="button" class="btn btn-primary">Alterar</button>
-              </a>                 
+                <p><b>Cordas: </b>{{ instruments.strings }}</p>                
           
           </div>
-        {% endfor %}
       </div>
     </div>  
 {% endblock %}

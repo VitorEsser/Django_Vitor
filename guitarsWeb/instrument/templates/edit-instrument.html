@@ -1,32 +1,33 @@
 {% extends "model-page.html" %} {% block content %}
-<h1 class="text-center">Cadastre um Instrumento</h1>
+<h1 class="text-center">Edite o Instrumento</h1>
 <br />
 <form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="container" style="margin-bottom: 10%">
     <div class="form-group">
       <label for="name">Nome:</label>
-      <input type="text" class="form-control" name="name" />
+      <input value="{{ instruments.name }}" type="text" class="form-control" name="name" />
     </div>
 
     <div class="form-group">
       <label for="brand">Marca:</label>
 
-      <select multiple type="text" class="form-control" name="brands">
+      <select value="{{ brands.all }}" multiple type="text" class="form-control" name="brands">
           {% for brand in brands %}
-              <option value="{{brand.id}}">{{ brand }}</option>
+              <option value="{{ brand.id }}">{{ brand }}</option>
           {% endfor %} 
       </select>
     </div>
     <div class="form-group">
       <label for="strings">Cordas:</label>
-      <input type="number" class="form-control" name="strings" />
+      <input value="{{ instruments.strings }}" type="number" class="form-control" name="strings" />
     </div>
     <div class="form-group">
+        <a href="{{ instruments.photo.url }}" target="_blank">Foto atual</a>
         <input type="file" class="form-control-file border" name="photo" accept="image/*">
     </div>
     <button type="submit" class="btn btn-primary">
-      Cadastrar
+      Salvar
     </button>
   </div>
 </form>
